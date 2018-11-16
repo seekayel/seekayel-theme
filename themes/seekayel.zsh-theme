@@ -1,6 +1,11 @@
 local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 
 function aws_profile() {
+  if [[ HW_AWS_EXPIRATION && "$(date +%FT%TZ)" > "$HW_AWS_EXPIRATION" ]]; then
+    unset HW_AWS_PROFILE
+    unset HW_AWS_EXPIRATION
+  fi
+
   if [ "$HW_AWS_PROFILE" ]; then
     echo "%{$fg_bold[green]%}[$HW_AWS_PROFILE]%{$reset_color%} "
   fi
